@@ -21,6 +21,13 @@ module.exports = {
         const targetUser = await interaction.options.getUser('target', true);
         let totalHits = 0;
 
+        // Check if challengingUser and targetUser are the same
+
+        if (challengingUser.id === targetUser.id) {
+            await interaction.reply({ content: "You cant challenge yourself to a game of PingPong!", flags: MessageFlags.Ephemeral });
+            return;
+        }
+
         // Creating Game Banner
 
         const GameBanner = new EmbedBuilder()

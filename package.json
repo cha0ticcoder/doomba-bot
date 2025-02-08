@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "node --experimental-strip-types ."
   },
   "keywords": [],
   "author": "",
@@ -13,9 +13,5 @@
   "dependencies": {
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.19.0",
-    "eslint": "^9.19.0"
   }
 }

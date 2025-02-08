@@ -5,13 +5,12 @@ require('dotenv').config();
 const fs = require('node:fs');
 const path = require('node:path');
 
-// Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits, MessageFlags } = require('discord.js');
+// Require the necessary discord.js classes & bot token
+const {Client, Collection, GatewayIntentBits } = require('discord.js');
 const token = process.env.DISCORD_BOT_TOKEN;
 
-
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
