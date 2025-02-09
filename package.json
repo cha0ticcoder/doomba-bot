@@ -8,10 +8,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "type": "commonjs",
   "dependencies": {
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7"
+  },
+  "overrides": {
+    "undici": "6.21.1"
   }
 }
