@@ -8,6 +8,5 @@ export const event = {
             return;
         }
 
-        message.react('👍');
     },
 };

@@ -35,7 +35,7 @@ export const command = {
             .setDescription(userMention(challengingUser.id) + ' vs ' + userMention(targetUser.id))
             .addFields({ name: 'Total Hits:', value: totalHits.toString(), inline: true })
 
-        interaction.reply({ embeds: [ GameBanner ] });
+        await interaction.reply({ embeds: [ GameBanner ] });
 
         await wait(1500)
 
@@ -43,14 +43,14 @@ export const command = {
             .setTitle(`PingPong - Game has started!`)
 
 
-        interaction.editReply({ embeds: [ GameBanner ] });
+        await interaction.editReply({ embeds: [ GameBanner ] });
 
         let opponents = [challengingUser, targetUser];
 
         // randomize beginning opponent
 
         for(let randomSwitches = Math.round(Math.random() * 5); randomSwitches > 0; randomSwitches--) {
-            [opponents[0], opponents[1]] = [opponents[1], opponents[0]]
+            opponents.reverse()
         }
 
         await wait(1000);
@@ -66,8 +66,6 @@ export const command = {
                 await GameBanner
                     .setTitle(`PingPong - ${opponents[0].globalName} hits the ball back to ${opponents[1].globalName}!`)
             }
-
-            interaction.editReply({ embeds: [ GameBanner ] });
 
             totalHits += 1;
 
@@ -90,7 +88,7 @@ export const command = {
 
             } else {
 
-                [opponents[0], opponents[1]] = [opponents[1], opponents[0]]
+                opponents.reverse()
 
                 await PingPongGameLogic();
 
