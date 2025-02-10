@@ -26,6 +26,10 @@ coverage
 # ignore discord rich presence plugin
 discord.xml
 
+# Filen Sync
+.filenignore
+.filen.trash.local
+
 # nyc test coverage
 .nyc_output
 
@@ -105,7 +109,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # vitepress build output
 **/.vitepress/dist

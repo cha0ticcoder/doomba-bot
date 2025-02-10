@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/doombabot.iml" filepath="$PROJECT_DIR$/.idea/doombabot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/doomba-bot.iml" filepath="$PROJECT_DIR$/.idea/doomba-bot.iml" />
     </modules>
   </component>
 </project>

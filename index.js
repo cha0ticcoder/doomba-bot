@@ -1,12 +1,14 @@
 // Require dotenv
-require('dotenv').config();
+import "dotenv/config";
 
 // Require the necessary Node Packages
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from "node:fs";
+import path from "node:path";
+const __dirname = import.meta.dirname;
 
 // Require the necessary discord.js classes & bot token
-const {Client, Collection, GatewayIntentBits } = require('discord.js');
+
+import { Client, Collection, GatewayIntentBits } from "discord.js";
 const token = process.env.DISCORD_BOT_TOKEN;
 
 // Create a new client instance
@@ -20,10 +22,10 @@ const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js') && !file.startsWith('_'));
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
+        const { command } = await import('file://' + filePath);
         // Set a new item in the Collection with the key as the command name and the value as the exported module
         if ('data' in command && 'execute' in command) {
             client.commands.set(command.data.name, command);
@@ -34,11 +36,11 @@ for (const folder of commandFolders) {
 }
 
 const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js') && !file.startsWith('_'));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
-    const event = require(filePath);
+    const { event } = await import('file://' + filePath);
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
