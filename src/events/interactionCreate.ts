@@ -1,9 +1,12 @@
-import {Events, MessageFlags} from "discord.js";
+import { Events, Interaction, MessageFlags } from "discord.js";
+import { DiscordEvent } from "../types.js";
 
-export const event = {
+export const event: DiscordEvent = {
     name: Events.InteractionCreate,
-    async execute(interaction) {
+    async execute(interaction: Interaction) {
         if (!interaction.isChatInputCommand()) return;
+
+        if (!interaction.client.commands) return;
 
         const command = interaction.client.commands.get(interaction.commandName);
 
