@@ -1,7 +1,6 @@
 import { Events, Message } from "discord.js";
-import { DiscordEvent } from "../types.js";
 
-export const event: DiscordEvent = {
+export const event = {
     name: Events.MessageCreate,
     async execute(message: Message) {
 

@@ -7,7 +7,6 @@ import * as path from "node:path";
 const __dirname: string = import.meta.dirname;
 
 // Require the necessary discord.js classes & bot token
-
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 
 const token: string | undefined = process.env.DISCORD_BOT_TOKEN;
@@ -19,13 +18,8 @@ if (typeof token == undefined) {
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
-console.log(client)
-
 client.commands = new Collection();
 client.cooldowns = new Collection();
-
-console.log("with collections\n")
-console.log(client)
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -45,24 +39,19 @@ for (const folder of commandFolders) {
     }
 }
 
-console.log('after commands import\n')
-console.log(client)
-
 const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js') && !file.startsWith('_'));
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.ts') && !file.startsWith('_'));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
     const { event } = await import('file://' + filePath);
+    console.log(event);
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
         client.on(event.name, (...args) => event.execute(...args));
     }
 }
-
-console.log('after events import\n')
-console.log(client)
 
 // Log in to Discord with your client's token
 client.login(token).then();
