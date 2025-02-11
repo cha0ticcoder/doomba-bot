@@ -6,3 +6,9 @@ declare module 'discord.js' {
         cooldowns?: Collection<any, any>,
     }
 }
+
+type DiscordEvent = {
+    name: string;
+    once?: boolean;
+    execute(...args: any[]): void;
+}

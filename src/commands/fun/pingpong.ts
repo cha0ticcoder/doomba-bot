@@ -1,5 +1,5 @@
-import {EmbedBuilder, MessageFlags, SlashCommandBuilder, userMention} from "discord.js";
-import {setTimeout as wait} from "node:timers/promises";
+import { EmbedBuilder, MessageFlags, SlashCommandBuilder, userMention } from "discord.js";
+import { setTimeout as wait } from "node:timers/promises";
 
 export const command = {
     cooldown: 30,
@@ -13,7 +13,7 @@ export const command = {
         ),
 
 
-    async execute(interaction) {
+    async execute(interaction: any) {
 
         // Initializing Users and other variables
 
@@ -21,7 +21,7 @@ export const command = {
         const targetUser = await interaction.options.getUser('target', true);
         let totalHits = 0;
 
-        // Check if challengingUser and targetUser are the same
+        // Check if User is challenging themselves
 
         if (challengingUser.id === targetUser.id) {
             await interaction.reply({ content: "You cant challenge yourself to a game of PingPong!", flags: MessageFlags.Ephemeral });

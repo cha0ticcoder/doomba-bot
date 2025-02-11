@@ -5,7 +5,8 @@
   "private": true,
   "main": "src/index.ts",
   "scripts": {
-    "serve": "node --experimental-strip-types ."
+    "dev": "tsx .",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
@@ -13,9 +14,14 @@
   "type": "module",
   "dependencies": {
     "discord.js": "^14.18.0",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.3",
+    "pg": "^8.13.2"
   },
   "devDependencies": {
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.4",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }
 }

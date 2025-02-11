@@ -1,13 +1,12 @@
 import { Events, MessageFlags } from "discord.js";
+import type { DiscordEvent } from "../discord.d.ts";
 
-export const event = {
+export const event: DiscordEvent = {
     name: Events.InteractionCreate,
     async execute(interaction: any) {
         if (!interaction.isChatInputCommand()) return;
 
-        if (!interaction.client.commands) return;
-
-        const command = interaction.client.commands.get(interaction.commandName);
+        const command = interaction.client.commands?.get(interaction.commandName);
 
         if (!command) {
             console.error(`No command matching ${interaction.commandName} was found.`);
