@@ -26,7 +26,7 @@ const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js') && !file.startsWith('_'));
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.ts')  && file.endsWith('.js') && !file.endsWith('.d.ts') && !file.startsWith('_'));
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
         const { command } = await import('file://' + filePath);
@@ -40,7 +40,7 @@ for (const folder of commandFolders) {
 }
 
 const eventsPath = path.join(__dirname, 'events');
-const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.ts') && !file.startsWith('_'));
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.ts')  && file.endsWith('.js') && !file.endsWith('.d.ts') && !file.startsWith('_'));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);

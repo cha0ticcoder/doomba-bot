@@ -1,40 +1,32 @@
-import {boolean, integer, pgTable, primaryKey, varchar} from "drizzle-orm/pg-core";
+import {boolean, pgTable, primaryKey, smallserial, varchar} from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
-    id: varchar(),
+export const usersTable = pgTable('users', {
+    userId: varchar('guild_id', { length: 19}).primaryKey().notNull(),
 });
 
-export const guildsTable = pgTable("guilds", {
-    id: varchar(),
+export const guildsTable = pgTable('guilds', {
+    guildId: varchar('guild_id', { length: 19}).primaryKey().notNull(),
 })
 
-export const availableModulesTable = pgTable("availableModules", {
-    module_id: integer().primaryKey(),
-    module_name: varchar(),
+export const modulesTable = pgTable('modules', {
+    moduleId: smallserial('module_id').primaryKey().notNull(),
 })
 
-export const modulesTable = pgTable("modules", {
-    module_id: integer().references(() => availableModulesTable.module_id),
-    guild_id: varchar().references(() => guildsTable.id),
-    enabled: boolean().notNull(),
+export const typesTable = pgTable('types', {
+    typeId: smallserial('type_id').primaryKey().notNull(),
+    type: varchar('type').unique().notNull(),
+})
+
+export const guildModulesTable = pgTable('guild_modules', {
+    guildId: varchar('guild_id', { length: 19}).references(() => guildsTable.guildId),
+    moduleId: smallserial('module_id').references(() => modulesTable.moduleId),
+    isEnabled: boolean('is_enabled'),
 }, (table) => [
-    primaryKey({ columns: [table.module_id, table.guild_id] }),
+    primaryKey({ columns: [table.guildId, table.moduleId] })
 ])
 
-
-
-export const moduleSettingsTable = pgTable("moduleSettings",{
-    setting_id: integer(),
-    module_id: integer().references(() => availableModulesTable.module_id),
-    guild_id: varchar().references(() => guildsTable.id),
-}, (table) => [
-    primaryKey({ columns: [table.setting_id, table.module_id, table.guild_id] }),
-])
-
-export const moduleUserDataTable = pgTable("moduleData",{
-    data_id: integer(),
-    module_id: integer().references(() => availableModulesTable.module_id),
-    guild_id: varchar().references(() => guildsTable.id),
-    user_id: varchar().references(() => usersTable.id),
-
+export const moduleDataTable = pgTable('module_data', {
+    moduleId: smallserial('module_id').references(() => modulesTable.moduleId).notNull(),
+    guildId: varchar('guild_id', { length: 19}).references(() => guildsTable.guildId).notNull(),
+    userId: varchar('guild_id').references(() => guildsTable.guildId),
 })
