@@ -1,25 +1,28 @@
-// Require dotenv
+// Import of dotenv config
 import "dotenv/config";
 
-// Require the necessary Node Packages
+// Import of necessary Node Packages
 import * as fs from "node:fs";
 import * as path from "node:path";
-const __dirname: string = import.meta.dirname;
 
-// Require the necessary discord.js classes & bot token
+// Import of necessary Discord.js *Stuff* 
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 
+// Declaration of Current Directory Variable and Bot Token
+const __dirname: string = import.meta.dirname;
 const token: string | undefined = process.env.DISCORD_BOT_TOKEN;
 
 if (token === undefined) {
     throw new Error("No Token provided! Please check the .env file!");
 }
 
-// Create a new client instance
+// Create a new Discord Client instance with Intents and Initialization of Collections
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]});
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+
+// Slash Command Loader / Handler
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
@@ -39,6 +42,8 @@ for (const folder of commandFolders) {
     }
 }
 
+// Event Loader / Handler
+
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts') && !file.startsWith('_'));
 
@@ -52,5 +57,5 @@ for (const file of eventFiles) {
     }
 }
 
-// Log in to Discord with your client's token
+// Log in to Discord with bot token
 client.login(token).then();
